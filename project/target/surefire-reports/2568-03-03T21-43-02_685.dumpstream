@@ -1,0 +1,5 @@
+# Created at 2568-03-03T21:43:03.036
+Boot Manifest-JAR contains absolute paths in classpath 'D:\weather\Myproject\project\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
