@@ -20,7 +20,7 @@ public class AirQualityGui {
     private Label airQualityIndex, pollutionText;
     private Button refreshButton;
 
-    public AirQualityGui(Stage stage) {
+    public AirQualityGui(Stage stage, Runnable onBack) {
         stage.setTitle("Air Quality App");
         stage.setResizable(false);
 
@@ -37,6 +37,9 @@ public class AirQualityGui {
         airQualityIndex = new Label("-");
         pollutionText = new Label("-");
 
+        Button btnBack = new Button("Back");
+        btnBack.setOnAction(e -> onBack.run());
+
         VBox searchBox = new VBox(8, locationField, refreshButton);
         searchBox.setAlignment(Pos.CENTER);
 
@@ -49,7 +52,7 @@ public class AirQualityGui {
         resultGrid.add(new Label("☁️ Pollution:"), 0, 1);
         resultGrid.add(pollutionText, 1, 1);
 
-        VBox layout = new VBox(15, lb_title, searchBox, resultGrid);
+        VBox layout = new VBox(15, lb_title, searchBox, resultGrid, btnBack);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(15));
         layout.setStyle("-fx-background-color: linear-gradient(to bottom, #2196F3, #64B5F6);");
@@ -61,25 +64,19 @@ public class AirQualityGui {
 
     public void fetchAirQuality() {
         String city = locationField.getText();
-        String apiKey = "YOUR_AIR_QUALITY_API_KEY"; // 🔹 ใช้ API ที่เกี่ยวข้อง
-        String url = "https://api.waqi.info/feed/" + city + "/?token=" + apiKey;
-
-        try {
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                JSONObject jsonResponse = new JSONObject(response.body());
-                JSONObject data = jsonResponse.getJSONObject("data");
-                int aqi = data.getInt("aqi");
-
-                airQualityIndex.setText(String.valueOf(aqi));
-                pollutionText.setText(aqi > 100 ? "Poor" : "Good");
-            }
-
-        } catch (Exception e) {
+        org.json.simple.JSONObject airData = AirQualityApp.getAirQualityData(city);
+    
+        if (airData != null) {
+            int aqi = Integer.parseInt(airData.get("aqi").toString());
+            String condition = airData.get("aqi_condition").toString();
+    
+            airQualityIndex.setText(String.valueOf(aqi));
+            pollutionText.setText(condition); // ✅ ใช้ค่าจาก convertAQICode
+        } else {
             airQualityIndex.setText("Error");
             pollutionText.setText("N/A");
         }
     }
+    
+    
 }
