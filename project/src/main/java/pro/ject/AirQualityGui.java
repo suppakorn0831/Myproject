@@ -64,7 +64,7 @@ public class AirQualityGui {
 
     public void fetchAirQuality() {
         String city = locationField.getText();
-        org.json.simple.JSONObject airData = AirQualityApp.getAirQualityData(city);
+        org.json.simple.JSONObject airData = AirQualityApi.getAirQualityData(city);
     
         if (airData != null) {
             int aqi = Integer.parseInt(airData.get("aqi").toString());

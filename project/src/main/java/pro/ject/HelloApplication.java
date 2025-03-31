@@ -123,11 +123,11 @@ public class HelloApplication extends Application {
     private void searchBTN() {
         String city = tf_city.getText();
         if (isAlpha(city)) {
-            if (GetAPI.request(city, cb_americanSys) == 0) {
+            if (Weatherapi.request(city, cb_americanSys) == 0) {
                 String degree = cb_americanSys.isSelected() ? "°F" : "°C";
                 String speedUnit = cb_americanSys.isSelected() ? "mph" : "m/s";
 
-                Weather latestWeather = Weather.getSearchHistory().get(Weather.getSearchHistory().size() - 1);
+                Weatherhistory latestWeather = Weatherhistory.getSearchHistory().get(Weatherhistory.getSearchHistory().size() - 1);
 
                 lb_temperatureValue.setText(String.format(Locale.ENGLISH, "%.1f %s", latestWeather.getTemp(), degree));
                 lb_humidityValue.setText(latestWeather.getHumidity() + " %");
@@ -147,7 +147,7 @@ public class HelloApplication extends Application {
     }
 
     private void historyBTN() {
-        TableView<Weather> table = new TableView<>();
+        TableView<Weatherhistory> table = new TableView<>();
         table.setMaxWidth(320);
 
         table.getColumns().addAll(
@@ -157,7 +157,7 @@ public class HelloApplication extends Application {
                 createColumn("Wind", "windSpeed", 80)
         );
 
-        table.setItems(Weather.getSearchHistory());
+        table.setItems(Weatherhistory.getSearchHistory());
 
         Scene historyScene = new Scene(table, 375, 500);
         Stage stage = new Stage();
@@ -166,8 +166,8 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
-    private <T> TableColumn<Weather, T> createColumn(String title, String property, int width) {
-        TableColumn<Weather, T> column = new TableColumn<>(title);
+    private <T> TableColumn<Weatherhistory, T> createColumn(String title, String property, int width) {
+        TableColumn<Weatherhistory, T> column = new TableColumn<>(title);
         column.setCellValueFactory(new PropertyValueFactory<>(property));
         column.setPrefWidth(width);
         return column;

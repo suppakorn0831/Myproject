@@ -79,9 +79,9 @@ public class WeatherAppGui {
         String city = searchTextField.getText();
         if (!city.isEmpty()) {
             // ดึงข้อมูลจาก API
-            int status = GetAPI.request(city, new CheckBox());
+            int status = Weatherapi.request(city, new CheckBox());
             if (status == 0) {
-                Weather latestWeather = Weather.getSearchHistory().get(Weather.getSearchHistory().size() - 1);
+                Weatherhistory latestWeather = Weatherhistory.getSearchHistory().get(Weatherhistory.getSearchHistory().size() - 1);
                 temperatureText.setText(String.format("%.1f °C", latestWeather.getTemp()));
                 humidityText.setText(latestWeather.getHumidity() + " %");
                 windspeedText.setText(String.format("%.1f m/s", latestWeather.getWindSpeed()));
