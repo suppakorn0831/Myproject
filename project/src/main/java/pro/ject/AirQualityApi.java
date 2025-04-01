@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class AirQualityApi {
 
     public static JSONObject getAirQualityData(String locationName) {
-        locationName = locationName.replaceAll(" ", "+");
+       
 
         String urlString = "https://api.waqi.info/feed/" + locationName +
                 "/?token=6173fbbd843ceb3edf1ae6e7bf87234dd04c4188";
@@ -76,7 +76,7 @@ public class AirQualityApi {
         return null;
     }
 
-    private static String convertAQICode(long aqiCode) {
+    private static String convertAQICode(int aqiCode) {
         if (aqiCode >= 0 && aqiCode <= 50) {
             return "GOOD";
         } else if (aqiCode >= 51 && aqiCode <= 100) {

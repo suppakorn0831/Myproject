@@ -44,9 +44,10 @@ public class Weatherapi {
                 boolean usSys = false;
                 if (cb_usSys.isSelected()) {
                     usSys = true;
-                    windSpeed = windSpeed * 2.237;  // แปลง m/s -> mph
-                    temp = (temp * 1.8) + 32;  // แปลง C -> F
+                    windSpeed = windSpeed * 2.237;  // m/s -> mph
+                    temp = (temp * 1.8) + 32;       // C -> F
                 }
+                
 
                 temp = Double.parseDouble(String.format(Locale.ENGLISH, "%.2f", temp));
                 windSpeed = Double.parseDouble(String.format(Locale.ENGLISH, "%.2f", windSpeed));
