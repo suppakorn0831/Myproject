@@ -92,12 +92,14 @@ public class AirQualityGui {
 
     private void updateAQIIcon(int aqi) {
         String iconName = "clear.png";
-        if (aqi > 150) {
-            iconName = "cloudy.png";
-        } else if (aqi > 100) {
-            iconName = "humidity.png";
-        } else if (aqi > 50) {
-            iconName = "windspeed.png";
+        if (aqi >= 0 && aqi <= 50) {
+            iconName = "Good.png";
+        } else if (aqi >= 51 && aqi <= 100) {
+            iconName = "Moderate.png";
+        } else if (aqi >= 101 && aqi <= 200) {
+            iconName = "Unhealthy.png";
+        } else if (aqi >= 201) {
+            iconName = "Hazardous.png";
         }
         try {
             Image image = new Image(getClass().getResource("/asset/weatherapp_images/" + iconName).toExternalForm());
